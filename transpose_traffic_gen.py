@@ -23,11 +23,10 @@ def create_splice(qubits, oneInputGates,twoInputGates,oneInputChance,network,siz
             # Calculate base index of qubits in targetNode
             targetNodeIndex = targetNode.getNodeNumber()
             qubitsPerNode = numOfQubits
-            baseIndex = targetNodeIndex * qubitsPerNode
+            stride = size * size
             offset = random.randint(0, qubitsPerNode - 1)
-
-            targetQubit = baseIndex + offset
-            if (qubits[targetQubit] != 1):
+            targetQubit = targetNodeIndex + stride * offset
+            if ( (targetQubit <= len(qubits) -1) and qubits[targetQubit] != 1):
                 outputSplice.append(f"({qubitNum} {targetQubit})")     
                 qubits[targetQubit] = 1   
                 twoInputGates -= 1
@@ -47,7 +46,7 @@ def generateCircuit(oneInputGates,twoInputGates,qubits,numOfQubits,Size):
             file.write(" \n")
 
 def getNodeCoordinates(qubitIndex, size, numOfQubits):
-    nodeNumber = qubitIndex // numOfQubits
+    nodeNumber = qubitIndex % (size*size)
     row = nodeNumber // size
     col = nodeNumber % size
     return (row, col)
@@ -95,7 +94,6 @@ oneInputChance = float(input("Enter a decimal 0 to 1 representing the % ofs  1 i
 twoInputChance = 1 - float(oneInputChance)
 usedQubits = int(input(f"You have {size*size*numOfQubits} total qubits, enter the number of those you'd wish to use: "))
 numOfGates = int(input("Enter The number of Gates you'd like to create: "))
-numOfQubits -= 3
 #Create Network
 network = Network([],size)
 for i in range(size):
