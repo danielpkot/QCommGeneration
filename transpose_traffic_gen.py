@@ -1,12 +1,12 @@
 import math
 import random
 
-def create_splice(qubits, oneInputGates,twoInputGates,oneInputChance,network,size,numOfQubits):
+def create_splice(qubits, oneInputGates,twoInputGates,oneInputChance,network,size,numOfQubits,usedQubits):
     spliceCoeff = random.randint(1,5)
     test = 0
     outputSplice = []
     while (test != spliceCoeff):
-        qubitNum = random.randint(0,len(qubits)-1)
+        qubitNum = random.randint(0,usedQubits-1)
         chance = random.random()
 
         if (chance < oneInputChance and (qubits[qubitNum] != 1) and oneInputGates != 0):
@@ -26,7 +26,7 @@ def create_splice(qubits, oneInputGates,twoInputGates,oneInputChance,network,siz
             stride = size * size
             offset = random.randint(0, qubitsPerNode - 1)
             targetQubit = targetNodeIndex + stride * offset
-            if ( (targetQubit <= len(qubits) -1) and qubits[targetQubit] != 1):
+            if ( (targetQubit < usedQubits) and qubits[targetQubit] != 1):
                 outputSplice.append(f"({qubitNum} {targetQubit})")     
                 qubits[targetQubit] = 1   
                 twoInputGates -= 1
@@ -35,15 +35,15 @@ def create_splice(qubits, oneInputGates,twoInputGates,oneInputChance,network,siz
 
     return twoInputGates,oneInputGates,outputSplice
 
-def generateCircuit(oneInputGates,twoInputGates,qubits,numOfQubits,Size):
+def generateCircuit(oneInputGates,twoInputGates,qubits,numOfQubits,Size,usedQubits):
     with open("transposeCircuit.txt","w") as file:
         while(twoInputGates != 0 or oneInputGates != 0):
             twoInputGates,oneInputGates,outputSplice = create_splice(qubits,oneInputGates,
-                        twoInputGates,oneInputChance,network,size,numOfQubits)
-            qubits = [0] * numOfQubits * size *size
-
-            file.write(" ".join(outputSplice))
-            file.write(" \n")
+                        twoInputGates,oneInputChance,network,size,numOfQubits,usedQubits)
+            qubits = [0] * usedQubits
+            if outputSplice:
+                file.write(" ".join(outputSplice))
+                file.write(" \n")
 
 def getNodeCoordinates(qubitIndex, size, numOfQubits):
     nodeNumber = qubitIndex % (size*size)
@@ -99,10 +99,10 @@ network = Network([],size)
 for i in range(size):
     for j in range(size):
       network.addNode(Node(i*size+j,size,(i,j)),i,j)
-qubits = [0] * numOfQubits * size *size
+qubits = [0] * usedQubits
 oneInputGates = math.floor(oneInputChance*numOfGates)
 twoInputGates = math.floor(twoInputChance*numOfGates)
-generateCircuit(oneInputGates,twoInputGates,qubits,numOfQubits,size)
+generateCircuit(oneInputGates,twoInputGates,qubits,numOfQubits,size,usedQubits)
 
 
   
