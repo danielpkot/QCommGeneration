@@ -35,8 +35,8 @@ def create_splice(qubits, oneInputGates,twoInputGates,oneInputChance,network,siz
 
     return twoInputGates,oneInputGates,outputSplice
 
-def generateCircuit(oneInputGates,twoInputGates,qubits,numOfQubits,Size,usedQubits):
-    with open("transposeCircuit.txt","w") as file:
+def generateCircuit(oneInputGates,twoInputGates,qubits,numOfQubits,Size,usedQubits,name):
+    with open(name,"w") as file:
         while(twoInputGates != 0 or oneInputGates != 0):
             twoInputGates,oneInputGates,outputSplice = create_splice(qubits,oneInputGates,
                         twoInputGates,oneInputChance,network,size,numOfQubits,usedQubits)
@@ -94,6 +94,7 @@ oneInputChance = float(input("Enter a decimal 0 to 1 representing the % ofs  1 i
 twoInputChance = 1 - float(oneInputChance)
 usedQubits = int(input(f"You have {size*size*numOfQubits} total qubits, enter the number of those you'd wish to use: "))
 numOfGates = int(input("Enter The number of Gates you'd like to create: "))
+name = input("Enter File name: ")
 #Create Network
 network = Network([],size)
 for i in range(size):
@@ -102,7 +103,7 @@ for i in range(size):
 qubits = [0] * usedQubits
 oneInputGates = math.floor(oneInputChance*numOfGates)
 twoInputGates = math.floor(twoInputChance*numOfGates)
-generateCircuit(oneInputGates,twoInputGates,qubits,numOfQubits,size,usedQubits)
+generateCircuit(oneInputGates,twoInputGates,qubits,numOfQubits,size,usedQubits,name)
 
 
   
