@@ -30,7 +30,7 @@ decode time per instruction (s): 1e-08
 *** NoC ***
 mesh_x x mesh_y: 4x4
 clock period (s): 1e-08
-link width (bits): 8
+link width (bits): 10
 
 *** Cores ***
 core 0: 0 16 32 48 64 80 96 
@@ -84,6 +84,6 @@ Communication time (s): 0.000207121
 Computation time (s): 4.05e-06
 Fetch time (s): 1.25e-07
 Decode time (s): 1e-05
-Dispatch time (s): 3.706e-05
-Execution time (s): 0.000258356
-Coherence (%): 38.1358
+Dispatch time (s): 3.456e-05
+Execution time (s): 0.000255856
+Coherence (%): 38.4932

@@ -30,7 +30,7 @@ decode time per instruction (s): 1e-08
 *** NoC ***
 mesh_x x mesh_y: 4x4
 clock period (s): 1e-08
-link width (bits): 2
+link width (bits): 6
 
 *** Cores ***
 core 0: 0 16 32 48 64 80 96 
@@ -75,15 +75,15 @@ Intercore communications (row is source, col is target):
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
 Operations per qubit: 9, 18, 9, 14, 15, 9, 17, 13, 18, 16, 17, 19, 22, 9, 12, 17, 10, 18, 17, 11, 13, 12, 16, 19, 22, 13, 11, 12, 12, 10, 18, 11, 11, 16, 14, 13, 22, 11, 13, 11, 22, 11, 20, 27, 20, 15, 11, 12, 18, 16, 16, 21, 14, 20, 10, 16, 21, 16, 10, 16, 21, 17, 15, 17, 12, 15, 17, 15, 17, 7, 17, 19, 13, 21, 10, 8, 25, 19, 10, 9, 18, 10, 15, 18, 16, 12, 14, 10, 17, 16, 12, 14, 13, 16, 11, 12, 17, 10, 23, 20, 
 Teleportations per qubit: 0, 2, 3, 2, 1, 0, 3, 2, 1, 2, 0, 4, 6, 2, 2, 0, 0, 3, 3, 2, 3, 0, 4, 3, 2, 1, 0, 3, 0, 3, 3, 0, 0, 1, 0, 6, 4, 0, 3, 2, 4, 1, 0, 5, 1, 1, 2, 0, 0, 2, 3, 7, 2, 0, 1, 5, 5, 4, 0, 2, 2, 0, 5, 0, 0, 3, 3, 4, 4, 0, 6, 2, 2, 5, 0, 3, 3, 4, 1, 0, 0, 3, 6, 5, 3, 0, 0, 3, 3, 2, 0, 3, 2, 4, 3, 0, 0, 2, 4, 4, 
-Communication time (s): 0.000223561
-	EPR pair generation time (s): 0.000142 (63.5172%)
-	EPR pair distribution time (s): 1.42e-09 (0.000635172%)
-	Pre-processing time (s): 5.538e-05 (24.7717%)
-	Classical transfer time (s): 2.192e-05 (9.80491%)
-	Post-processing time (s): 4.26e-06 (1.90552%)
+Communication time (s): 0.000212601
+	EPR pair generation time (s): 0.000142 (66.7917%)
+	EPR pair distribution time (s): 1.42e-09 (0.000667917%)
+	Pre-processing time (s): 5.538e-05 (26.0487%)
+	Classical transfer time (s): 1.096e-05 (5.15519%)
+	Post-processing time (s): 4.26e-06 (2.00375%)
 Computation time (s): 4.05e-06
 Fetch time (s): 1.25e-07
 Decode time (s): 1e-05
-Dispatch time (s): 0.00012714
-Execution time (s): 0.000364876
-Coherence (%): 25.6281
+Dispatch time (s): 4.54867e-05
+Execution time (s): 0.000272263
+Coherence (%): 36.2074
