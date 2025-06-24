@@ -6,7 +6,7 @@ def attainParamaters():
 
 size, numOfQubits = attainParamaters()
 
-def encoder(network,qubits,initial_size, compressed_size):
+def encoder(network,initial_size, compressed_size):
         outputSplice = []
         result = []
         network_size = len(network.getNodes())*len(network.getNodes())
@@ -26,7 +26,7 @@ def encoder(network,qubits,initial_size, compressed_size):
                             outputSplice.append(f"({j} {j+network_size})")
                     elif i == (reps - 1 ):
                         for j in range(network_size):
-                            outputSplice.append(f"(({j+network_size*2}) ({j+network_size*3} {j+network_size*4})")
+                            outputSplice.append(f"({j+network_size*2}) ({j+network_size*3} {j+network_size*4})")
                     else:
                         for j in range(network_size):
                             outputSplice.append(f"({j+network_size*0} {j+network_size*1}) ({j+network_size*2}) ({j+network_size*3} {j+network_size*4})")
@@ -37,7 +37,7 @@ def encoder(network,qubits,initial_size, compressed_size):
                                 outputSplice.append(f"({j}) ({j+network_size*1} {j+network_size*2})")
                     elif i == (reps - 1 ):
                         for j in range(network_size):
-                                    outputSplice.append(f"(({j+network_size*3} {j+network_size*4})")
+                                    outputSplice.append(f"({j+network_size*3} {j+network_size*4})")
                     else:
                         for j in range(network_size):
                                 outputSplice.append(f"({j}) ({j+network_size*1} {j+network_size*2}) ({j+network_size*3} {j+network_size*4})")
@@ -52,8 +52,26 @@ def encoder(network,qubits,initial_size, compressed_size):
     
         return result
 
+def swap_test(network,initial_size, compressed_size):
+    outputSplice = []
+    result = []
+    auxilQubitNumber = initial_size + (initial_size - compressed_size)
+    network_size = len(network.getNodes())*len(network.getNodes())
+    for i in range(network_size):
+        outputSplice.append(f"({auxilQubitNumber})")
+    result.append(outputSplice)
+    outputSplice = []
+    for i in range(initial_size - compressed_size):
+        outputSplice.append(f"({auxilQubitNumber} {auxilQubitNumber-i} {compressed_size + i})")
+        result.append(outputSplice)
+        outputSplice = []
 
+    for i in range(network_size):
+        outputSplice.append(f"({auxilQubitNumber})")
+    result.append(outputSplice)
+    outputSplice = []
 
+    return result
 
 #Lets say I have 160 qubits total
 #lets say on each node 7 qubits of data is being used
@@ -103,7 +121,12 @@ for i in range(size):
       network.addNode(Node(i*size+j,size,(i,j)),i,j)
 qubits = [0] * numOfQubits * size*size 
 
-encoder = encoder(network,qubits,initial_size,compressed_size)
+encoder = encoder(network,initial_size,compressed_size)
 with open(f"{name}.txt", "w") as f:
     for layer in encoder:
-        print(" ".join(layer) + "\n")
+        f.write(" ".join(layer) + "\n")
+
+swap_test = swap_test(network,initial_size,compressed_size)
+with open(f"{name}.txt", "w") as f:
+    for layer in encoder:
+        f.write(" ".join(layer) + "\n")
