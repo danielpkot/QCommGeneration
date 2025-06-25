@@ -17,8 +17,11 @@ def encoder(network,initial_size, compressed_size):
         outputSplice = []
         reps = 7
         for i in range(reps):
+            x = 3
+            if (i == reps - 1):
+                x = 2
             
-            for layer in range(3):
+            for layer in range(x):
                 
                 if layer == 0:
                     if  i == 0:
@@ -37,10 +40,10 @@ def encoder(network,initial_size, compressed_size):
                                 outputSplice.append(f"({j}) ({j+network_size*1} {j+network_size*2})")
                     elif i == (reps - 1 ):
                         for j in range(network_size):
-                                    outputSplice.append(f"({j+network_size*3} {j+network_size*4})")
+                                    outputSplice.append(f"({j+network_size*3}) ({j+network_size*4})")
                     else:
                         for j in range(network_size):
-                                outputSplice.append(f"({j}) ({j+network_size*1} {j+network_size*2}) ({j+network_size*3} {j+network_size*4})")
+                                outputSplice.append(f"({j}) ({j+network_size*1} {j+network_size*2}) ({j+network_size*3}) ({j+network_size*4})")
 
 
                 if layer == 2:
