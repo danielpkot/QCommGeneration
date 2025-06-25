@@ -10,7 +10,6 @@ def encoder(network,initial_size, compressed_size):
         outputSplice = []
         result = []
         network_size = len(network.getNodes())*len(network.getNodes())
-        print(network_size)
         for i in range(network_size * initial_size):
             outputSplice.append(f"({i})")
         result.append(outputSplice)
@@ -59,18 +58,20 @@ def swap_test(network,initial_size, compressed_size):
     outputSplice = []
     result = []
     auxilQubitNumber = initial_size + (initial_size - compressed_size)
+    total_size = initial_size + (initial_size - compressed_size) + 1
     network_size = len(network.getNodes())*len(network.getNodes())
     for i in range(network_size):
-        outputSplice.append(f"({auxilQubitNumber})")
+        outputSplice.append(f"({auxilQubitNumber*network_size+i})")
     result.append(outputSplice)
     outputSplice = []
     for i in range(initial_size - compressed_size):
-        outputSplice.append(f"({auxilQubitNumber} {auxilQubitNumber-i} {compressed_size + i})")
+        for node in range (network_size):
+            outputSplice.append(f"({auxilQubitNumber*network_size+node} {auxilQubitNumber*network_size+node-(network_size)*(i+1)} {compressed_size*network_size+node+(network_size)*(i)})")
         result.append(outputSplice)
-        outputSplice = []
+        outputSplice = []   
 
     for i in range(network_size):
-        outputSplice.append(f"({auxilQubitNumber})")
+        outputSplice.append(f"({auxilQubitNumber*network_size+i})")
     result.append(outputSplice)
     outputSplice = []
 
@@ -112,7 +113,7 @@ class Network:
         return self.nodes
     
 initial_size = int(input(f"You have {numOfQubits} qubits per node, how many would you like to use for your message: "))
-compressed_size = int(input(f"How Many Qubits would you like to compress to: )"))
+compressed_size = int(input(f"How Many Qubits would you like to compress to: "))
 reference_space = initial_size - compressed_size
 
 
@@ -130,6 +131,10 @@ with open(f"{name}.txt", "w") as f:
         f.write(" ".join(layer) + "\n")
 
 swap_test = swap_test(network,initial_size,compressed_size)
-with open(f"{name}.txt", "w") as f:
-    for layer in encoder:
+with open(f"{name}.txt", "a") as f:
+    for layer in swap_test:
+        f.write(" ".join(layer) + "\n")
+
+with open(f"{name}.txt", "a") as f:
+    for layer in reversed(encoder):
         f.write(" ".join(layer) + "\n")
